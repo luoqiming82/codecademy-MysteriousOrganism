@@ -48,6 +48,27 @@ function pAequorFactory(specimenNum,dna){
       console.log(`specimen ${this.specimenNum} and specimen ${pAequor.specimenNum} have ${percentageInCommon} DNA in common`);
     },// end compareDNA()
 
+    // complementStrand()
+    complementStrand(){
+      const complementDna = [];
+      for(let val of this.dna){
+          switch(val){
+              case 'A':
+                  complementDna.push('T');
+                  break;
+              case 'T':
+                  complementDna.push('A');
+                  break;
+              case 'C':
+                  complementDna.push('G');
+                  break;
+              case 'G':
+                  complementDna.push('C');
+          }
+      }
+      return complementDna;
+    },// end complementStrand()
+
     // willLikelySurvive(): returns true if the object’s .dna array contains at least 60% 'C' or 'G' bases. 
     willLikelySurvive(){
       //calculate total number of 'c g'
@@ -67,16 +88,30 @@ function pAequorFactory(specimenNum,dna){
   } //end pAequorFactory() function return
 } // end pAequorFactory()
 
-// 
+//  create 30 instances of pAequor that can survive in their natural environment.
+function survivor30(){
+  const result = [];
+  for(let i=1; i<=30; i++){
+    let dnaY = mockUpStrand();
+    const pAequorX = pAequorFactory(`#${i}`,dnaY);
+    while(pAequorX.willLikelySurvive() ===false){
+      pAequorX.dna = mockUpStrand();
+    }
+    result.push(pAequorX);
+  }
+  return result;
+}
+
+const pAequor30 = survivor30();
 
 
-
-
+/*
 //test
 let x = "#1";
 let y = mockUpStrand();
 const obj = pAequorFactory(x,y);
 console.log(obj);
+console.log(obj.complementStrand());
 //mutate()
 console.log(obj.mutate())
 // compare()
@@ -85,6 +120,15 @@ console.log(pAequor2);
 obj.compareDNA(pAequor2);
 // willLikelySurvive()
 console.log(obj.willLikelySurvive());
+//30
+const pAx = pAequorFactory('N',mockUpStrand());
+const arr9 = [];
+//console.log(pAequor30)
+//pAequor30.forEach(obj => arr9.push(obj.willLikelySurvive()));
+//console.log(arr9)
+pAequor30.forEach(val => val.compareDNA(pAx));
+*/
+
 
 
 
